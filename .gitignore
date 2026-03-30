@@ -49,3 +49,5 @@ playwright.config.js
 playright*
 supabase/
 antigravity-awesome-skills-main/
+.agents/
+.augment/
