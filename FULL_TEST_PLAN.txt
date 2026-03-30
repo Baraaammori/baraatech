@@ -1,0 +1,233 @@
+Baraa Tech - Full End-to-End Test Plan
+Date: 2026-03-26
+Owner: QA / Developer
+
+====================================================================
+0) PRE-TEST SETUP
+====================================================================
+[ ] Install dependencies: npm install
+[ ] Run app in dev mode: npm run dev
+[ ] Verify Supabase env values are present in .env.local
+[ ] Apply latest database schema in Supabase SQL editor
+[ ] Ensure seed/mock data exists for projects/blog/news/services/pages/settings
+[ ] Confirm at least 2 test users exist:
+    - super admin user
+    - normal user (no roles)
+
+Test accounts:
+- Super Admin Email: ______________________
+- Super Admin Password: ___________________
+- Normal User Email: ______________________
+- Normal User Password: ___________________
+
+====================================================================
+1) PUBLIC SITE - ROUTING AND CONTENT
+====================================================================
+[ ] Home page loads without console/runtime errors
+[ ] About page loads
+[ ] Services page loads
+[ ] Projects list page loads
+[ ] Project details page loads
+[ ] Blog list page loads
+[ ] Blog details page loads
+[ ] News list page loads
+[ ] News details page loads
+[ ] Contact page loads
+[ ] 404 page works for invalid route
+
+Checks per page:
+[ ] Header visible
+[ ] Footer/layout structure stable
+[ ] Images load correctly
+[ ] No broken links
+[ ] Mobile responsive behavior acceptable
+[ ] No hydration mismatch warnings
+
+====================================================================
+2) LANGUAGE SWITCHER (EN/AR)
+====================================================================
+[ ] EN button is clickable
+[ ] AR button is clickable
+[ ] URL query updates with lang value (lang=en / lang=ar)
+[ ] site_lang cookie is set and persists on refresh
+[ ] HTML direction changes to RTL for Arabic
+[ ] Header labels switch language
+[ ] Home content switches language
+[ ] About/Services/Projects pages switch language
+[ ] Blog/News list and details switch language
+[ ] English fallback appears when Arabic content is missing
+
+====================================================================
+3) AUTHENTICATION FLOW
+====================================================================
+Signup:
+[ ] Signup page loads
+[ ] Valid signup works and success message appears
+[ ] Invalid email is rejected
+[ ] Short password is rejected
+[ ] Duplicate account behavior is handled clearly
+
+Login:
+[ ] Login page loads
+[ ] Valid login redirects correctly
+[ ] Invalid credentials show proper error
+
+Logout:
+[ ] Logged-in user sees Logout button
+[ ] Clicking Logout signs user out and redirects home
+[ ] After logout header shows Login (not Logout)
+
+Header role-based controls:
+[ ] Logged-out user does not see Dashboard
+[ ] Logged-in normal user (no permissions) does not see Dashboard
+[ ] Logged-in admin user sees Dashboard
+
+====================================================================
+4) USER PROFILE + ROLE DEFAULT BEHAVIOR
+====================================================================
+[ ] New signup creates profile record in profiles table
+[ ] New signup gets NO row in user_roles by default
+[ ] Admin can manually assign roles to new user
+[ ] Assigned roles are reflected after save
+
+====================================================================
+5) DASHBOARD ACCESS CONTROL (RBAC)
+====================================================================
+As normal user (no roles):
+[ ] Cannot access admin pages or sees permission denied
+[ ] Dashboard nav hides restricted modules
+
+As super admin:
+[ ] Full dashboard access works
+[ ] All modules in navigation are visible
+
+As role-limited users (Editor / Support / Content Manager):
+[ ] Only allowed sections appear in nav
+[ ] Restricted API actions are blocked
+[ ] Allowed API actions succeed
+
+====================================================================
+6) DASHBOARD - USERS AND ROLES MODULE
+====================================================================
+Users module:
+[ ] Users page loads
+[ ] Selecting a user updates visible role checkboxes correctly
+[ ] Current roles text shows assigned roles accurately
+[ ] Role add/remove persists after save
+
+Roles module:
+[ ] Roles list loads
+[ ] Create role works
+[ ] Delete custom role works
+[ ] System role delete protection works
+[ ] Permission assignment save works
+
+Safety checks:
+[ ] Self/critical role protection behavior still enforced
+[ ] No accidental lockout from admin management flows
+
+====================================================================
+7) DASHBOARD - CONTENT CRUD MODULES
+====================================================================
+Projects module:
+[ ] Create project works
+[ ] Edit quick title works
+[ ] Publish/unpublish works
+[ ] Delete works
+
+Blog module:
+[ ] Create blog works
+[ ] Edit quick title works
+[ ] Publish/unpublish works
+[ ] Delete works
+
+News module:
+[ ] Create news works
+[ ] Edit quick title works
+[ ] Publish/unpublish works
+[ ] Delete works
+
+Services module:
+[ ] Create service works
+[ ] Edit quick title works
+[ ] Publish/unpublish works
+[ ] Delete works
+
+Pages content module:
+[ ] Create/update page content works
+[ ] Published content appears publicly
+
+Settings module:
+[ ] Create/update setting key-value works
+[ ] JSON validation behavior works
+
+====================================================================
+8) PUBLIC FORMS
+====================================================================
+Contact form:
+[ ] Valid submit succeeds
+[ ] Success status appears
+[ ] Form resets after success
+[ ] Invalid submit fails gracefully
+[ ] No "Cannot read properties of null (reading 'reset')" error
+
+Project interest form:
+[ ] Valid submit succeeds
+[ ] Success status appears
+[ ] Form resets after success
+[ ] Invalid submit fails gracefully
+[ ] No null reset runtime error
+
+====================================================================
+9) DASHBOARD - MESSAGES AND REQUESTS WORKFLOW
+====================================================================
+Messages:
+[ ] Contact messages list loads
+[ ] Mark read/unread works
+
+Project requests:
+[ ] Requests list loads
+[ ] Status updates (new/reviewing/contacted/closed) work
+
+====================================================================
+10) DATABASE + POLICY VALIDATION
+====================================================================
+[ ] Public users can read only published public content
+[ ] Public users can submit contact/project request forms
+[ ] Unauthorized user cannot read admin tables
+[ ] Authorized users can read/write based on permission keys
+[ ] app_has_permission() behavior is correct
+
+====================================================================
+11) TECHNICAL QUALITY GATES
+====================================================================
+[ ] npm run lint passes
+[ ] npm run build passes
+[ ] No runtime errors in browser console during key flows
+[ ] No hydration warnings in normal environment
+
+====================================================================
+12) E2E TEST EXECUTION (OPTIONAL AUTOMATED)
+====================================================================
+[ ] Install browser: npx playwright install chromium
+[ ] Run tests: npm run test:e2e
+[ ] If admin tests require credentials, set env values:
+    - E2E_ADMIN_EMAIL
+    - E2E_ADMIN_PASSWORD
+    - optional E2E_ASSIGN_USER_EMAIL
+[ ] Confirm all critical paths pass
+
+====================================================================
+13) RELEASE READINESS SIGN-OFF
+====================================================================
+[ ] All critical tests passed
+[ ] Known issues documented (if any)
+[ ] Rollback plan prepared
+[ ] Final stakeholder demo checklist ready
+
+Final status:
+- Critical defects: ______
+- High defects: ______
+- Medium defects: ______
+- Low defects: ______
+- Release decision: GO / NO-GO
