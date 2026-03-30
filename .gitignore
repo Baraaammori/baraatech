@@ -51,3 +51,5 @@ supabase/
 antigravity-awesome-skills-main/
 .agents/
 .augment/
+FULL_TEST_PLAN.txt
+PROJECT_REQUIREMENTS_COVERAGE.md
